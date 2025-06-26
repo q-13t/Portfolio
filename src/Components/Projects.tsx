@@ -158,7 +158,7 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
             <div className="flex align-middle items-center justify-start flex-col md:px-12 md:py-10 h-full">
                 <div className='w-full h-max'>
                     <RevealFromLeft>
-                        <h1 className='dark:text-white text-black text-5xl font-mono md:my-16 my-3'>Projects</h1>
+                        <h1 className='dark:text-white text-black text-5xl font-mono md:my-5 my-3'>Projects</h1>
                     </RevealFromLeft>
                     <div className='flex-grow-[1] bg-cyan-400 h-[1px]'></div>
                 </div>

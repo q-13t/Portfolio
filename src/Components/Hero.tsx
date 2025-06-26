@@ -7,7 +7,7 @@ const Hero = ({ meta, contact_ref }) => {
         <section ref={meta.content_ref} id={meta.name} className='h-auto md:h-[100vh] min-h-[100vh] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-auto md:px-24 pl-[4rem] pr-[1rem]'>
             <div className="h-full w-full flex flex-col align-middle items-start justify-center md:px-12 md:py-10 py-4">
                 <FadeInTop >
-                    <h1 className='dark:text-white text-black text-5xl font-mono md:my-16 my-3'>Greetings 👋</h1>
+                    <h1 className='dark:text-white text-black text-5xl font-mono md:my-5 my-3'>Greetings 👋</h1>
                 </FadeInTop>
                 <RevealFromLeft _delay={0.5}>
                     <FadeInTop _delay={0.75}>
