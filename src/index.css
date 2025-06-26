@@ -16,19 +16,9 @@ body {
 
 :root {
     --size: 20px;
-    --bg: #000000;
-    --clr-1: #00c2ff;
-    --clr-2: #33ff8c;
-    --clr-3: #ffc640;
-    --clr-4: #e54cff;
-
-    --blur: 1rem;
-    --fs: clamp(3rem, 8vw, 7rem);
-    --ls: clamp(-1.75px, -0.25vw, -3.5px);
 }
 
 .bg {
-    /* background: conic-gradient(from 180deg at 50% 70%, hsla(0, 0%, 98%, 1) 0deg, #eec32d 72.0000010728836deg, #ec4b4b 144.0000021457672deg, #709ab9 216.00000858306885deg, #4dffbf 288.0000042915344deg, hsla(0, 0%, 98%, 1) 1turn); */
     background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 238, 255, 1) 35%, rgba(0, 238, 255, 1) 67%, rgba(0, 0, 0, 1) 100%);
     mask: radial-gradient(circle at 50% 50%, white 2px, transparent 2.5px) 50% 50% / var(--size) var(--size), url("https://assets.codepen.io/605876/noise-mask.png") 256px 50% / 256px 256px;
     mask-composite: intersect;
