@@ -15,7 +15,7 @@ const Experience = ({ meta, elements }) => {
                 <div className='w-full  flex align-start items-start justify-start flex-col'>
                     {elements.map((item, index) => {
                         return (
-                            <div className='dark:text-white text-black text-md font-mono border-x-1 border-y-0 border border-black dark:border-cyan-400 mx-4 my-2 p-2 w-full'>
+                            <div key={index} className='dark:text-white text-black text-md font-mono border-x-1 border-y-0 border border-black dark:border-cyan-400 mx-4 my-2 p-2 w-full'>
                                 <FadeInTop _delay={index * 0.1}>
                                     <div className='flex align-middle items-center justify-between'>
                                         <div className='flex flex-col'>
@@ -30,7 +30,7 @@ const Experience = ({ meta, elements }) => {
                                         {
                                             item.technologies.map((tech, index) => {
                                                 return (
-                                                    <p key={index} className='text-cyan-400 border font-mono border-black dark:border-white rounded-lg mx-4 my-2 p-2'>{tech} </p>
+                                                    <p key={tech} className='text-cyan-400 border font-mono border-black dark:border-white rounded-lg mx-4 my-2 p-2'>{tech} </p>
                                                 );
                                             })
                                         }

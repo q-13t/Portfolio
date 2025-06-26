@@ -1,5 +1,4 @@
 import { motion, useAnimation, useInView } from "framer-motion";
-import { div } from "framer-motion/client";
 import { useRef, useEffect } from "react";
 
 const RevealFromLeft = ({ children, _delay = 0.25, _duration = 0.50 }) => {
@@ -33,7 +32,6 @@ const RevealFromLeft = ({ children, _delay = 0.25, _duration = 0.50 }) => {
                         bottom: 4,
                         left: 0,
                         right: 0,
-                        // backgroundColor: "#CCC",
                         background: "rgba(34, 221, 238, 1)",
                         zIndex: 100
                     }

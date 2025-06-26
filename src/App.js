@@ -1,4 +1,3 @@
-import './App.css';
 import { ContextHook } from './hooks/Context.tsx';
 import { useRef, useEffect } from "react";
 import About from './Components/About.tsx';
@@ -62,6 +61,8 @@ function App() {
                 interceptor.unobserve(element.content_ref.current);
             });
         };
+        //stfu
+        //eslint-disable-next-line
     }, []);
 
     return (
@@ -74,7 +75,7 @@ function App() {
                 <Achievements meta={navRefs[4]} elements={achievements} />
                 <Contact meta={navRefs[5]} />
             </ContextHook>
-            <div class="bg"></div>
+            <div className="bg"></div>
         </>
     );
 }

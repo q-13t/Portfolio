@@ -1,4 +1,3 @@
-import { div, span } from "framer-motion/client";
 import FadeInTop from "../animations/FadeInTop.tsx";
 import RevealFromLeft from "../animations/RevealFromLeft.tsx";
 import RevealFromRight from "../animations/RevealFromRight.tsx";
@@ -49,7 +48,7 @@ const About = ({ meta }) => {
                         <div className="flex flex-wrap content-start justify-start items-center">
                             {stack.map((item, index) => {
                                 return (
-                                    <span className='dark:text-white text-black text-md font-mono border border-black dark:border-white rounded-lg mx-4 my-2 p-2'>
+                                    <span key={item} className='dark:text-white text-black text-md font-mono border border-black dark:border-white rounded-lg mx-4 my-2 p-2'>
                                         <FadeInTop _delay={index * 0.1}>
                                             <span>{item}</span>
                                         </FadeInTop>

@@ -75,6 +75,8 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
             window.removeEventListener("mouseup", onMouseUp);
             window.addEventListener("mouseleave", onMouseLeave);
         };
+        // stfu
+        // eslint-disable-next-line 
     }, []);
 
 
@@ -143,6 +145,8 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
             cancelAnimationFrame(animationFrameRef.current)
         }
         return () => cancelAnimationFrame(animationFrameRef.current);
+        // stfu
+        // eslint-disable-next-line 
     }, [isHovered, isInView, canScroll]);
 
 
@@ -168,9 +172,9 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
                 </div>
                 <div ref={containerRef} className="flex w-max py-10 " style={{ transform: `translateX(0px)`, }} >
                     {items.map((item, i) => (
-                        <div id={item.name}>
+                        <div id={item.name} key={item.name} >
                             <FadeInTop _delay={0.25} _duration={1}>
-                                <div key={item.name} className="flex-shrink-0 w-[300px] h-[600px] mr-6 focus overflow-hidden flex justify-start items-start flex-col" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => { setIsHovered(false); }}>
+                                <div className="flex-shrink-0 w-[300px] h-[600px] mr-6 focus overflow-hidden flex justify-start items-start flex-col" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => { setIsHovered(false); }}>
                                     <img src={"project_img/" + item.image} alt={item.name} className="w-full h-40 object-cover rounded cursor-pointer" onClick={() => { window.open("project_img/" + item.image, "_blank") }} />
                                     <h3 className="text-cyan-400 text-3xl font-mono ">{item.name}</h3>
                                     <div className="flex-1">

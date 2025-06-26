@@ -16,7 +16,7 @@ const Achievements = ({ meta, elements }) => {
                     {elements.map((item, index) => {
                         return (
                             <div className='dark:text-white text-black text-md font-mono border-x-1 border-y-0 border border-black dark:border-cyan-400 md:mx-4 my-2 p-2 w-full '>
-                                {index % 2 == 0 ? <RevealFromLeft _delay={index * 0.1}>
+                                {index % 2 === 0 ? <RevealFromLeft _delay={index * 0.1}>
                                     <div className='flex align-middle items-center justify-between pb-6 truncate'>
                                         <div className='flex flex-col truncate'>
                                             <h1 className=' text-cyan-400 text-2xl font-mono'>{item.title}</h1>
@@ -25,7 +25,7 @@ const Achievements = ({ meta, elements }) => {
                                         <p>{item.date}</p>
                                     </div>
                                     <div className=" pt-3 w-full truncate" >
-                                        <a href={item.link} target="_blank" className="text-cyan-400 font-mono truncate">{item.link}</a>
+                                        <a href={item.link} target="_blank" rel="noreferrer" className="text-cyan-400 font-mono truncate">{item.link}</a>
                                     </div>
                                 </RevealFromLeft> : <RevealFromRight _delay={index * 0.1}>
                                     <div className='flex align-middle items-center flex-col md:flex-row md:justify-between pb-6 '>
@@ -36,9 +36,10 @@ const Achievements = ({ meta, elements }) => {
                                         <p>{item.date}</p>
                                     </div>
                                     <div className=" pt-3 w-full truncate" >
-                                        <a href={item.link} target="_blank" className="text-cyan-400 font-mono truncate">{item.link}</a>
+                                        <a href={item.link} target="_blank" rel="noreferrer" className="text-cyan-400 font-mono truncate">{item.link}</a>
                                     </div>
-                                </RevealFromRight>}
+                                </RevealFromRight>
+                                }
                             </div>
                         )
                     })}
