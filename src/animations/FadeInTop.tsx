@@ -1,15 +1,16 @@
 import { motion, useAnimation, useInView } from "framer-motion"
 import { useEffect, useRef } from "react";
 
-const FadeInTop = ({ children, _delay = 0.25, _duration = 0.50 }) => {
+const FadeInTop = ({ children, _delay = 0.25, _duration = 0.50, _once = true }) => {
     const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
+    const isInView = useInView(ref, { once: _once });
     const mainControls = useAnimation();
 
     useEffect(() => {
-
         if (isInView) {
             mainControls.start("end");
+        } else {
+            mainControls.start("start");
         }
     }, [isInView, mainControls]);
 

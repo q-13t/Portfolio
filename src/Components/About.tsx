@@ -35,7 +35,7 @@ const About = ({ meta }) => {
 
                     <div className="hidden h-full lg:flex lg:flex-1  lg:flex-col lg:justify-center lg:items-center ">
                         <RevealFromTop>
-                            <img src="/profile_2.jpg" alt="Volodymyr Davybida" className="focus w-full h-full object-fill border rounded-xl border-transparent" />
+                            <img src="/profile_2.jpg" onClick={() => { window.open("/profile_2.jpg", "_blank") }} alt="Volodymyr Davybida" className="focus w-full h-full object-fill border rounded-xl border-transparent" />
                         </RevealFromTop>
                     </div>
                     <div className="flex-1 flex flex-col justify-start items-start">

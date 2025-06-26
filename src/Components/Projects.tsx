@@ -110,8 +110,8 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
 
             const firstChild = container.children[0];
             const lastChild = container.children[container.children.length - 1];
-            const firstChild_end = firstChild.getBoundingClientRect().x + firstChild.getBoundingClientRect().width;
-            const lastChild_start = lastChild.getBoundingClientRect().x;
+            const firstChild_end = firstChild.getBoundingClientRect().right;
+            const lastChild_start = lastChild.getBoundingClientRect().left;
 
             container.style.transition = 'none';
 
@@ -121,7 +121,7 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
                 if (isDragging.current) {
                     startX.current -= ITEM_WIDTH;
                 }
-            } else if (lastChild_start >= parent_rect.width && (firstChild && lastChild)) {
+            } else if (lastChild_start >= parent_rect.width && (firstChild && lastChild) && isDragging.current) {
                 container.insertBefore(lastChild, firstChild);
                 currentTranslate.current -= ITEM_WIDTH;
                 if (isDragging.current) {
@@ -155,7 +155,7 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
 
     return (
         <section ref={(el) => { meta.content_ref.current = el; sectionRef.current = el; }} id={meta.name} className='max-w-[100vw] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-hidden mx-24' >
-            <div className="flex align-middle items-center justify-center flex-col md:px-12 md:py-10 h-full">
+            <div className="flex align-middle items-center justify-start flex-col md:px-12 md:py-10 h-full">
                 <div className='w-full h-max'>
                     <RevealFromLeft>
                         <h1 className='dark:text-white text-black text-5xl font-mono md:mt-16 mt-3'>Projects</h1>
@@ -173,7 +173,7 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
                 <div ref={containerRef} className="flex w-max py-10 " style={{ transform: `translateX(0px)`, }} >
                     {items.map((item, i) => (
                         <div id={item.name} key={item.name} >
-                            <FadeInTop _delay={0.25} _duration={1}>
+                            <FadeInTop _delay={0.5} _duration={0.5} _once={false}>
                                 <div className="flex-shrink-0 w-[300px] h-[600px] mr-6 focus overflow-hidden flex justify-start items-start flex-col" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => { setIsHovered(false); }}>
                                     <img src={"project_img/" + item.image} alt={item.name} className="w-full h-40 object-cover rounded cursor-pointer" onClick={() => { window.open("project_img/" + item.image, "_blank") }} />
                                     <h3 className="text-cyan-400 text-3xl font-mono ">{item.name}</h3>

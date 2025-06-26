@@ -75,7 +75,7 @@ function App() {
                 <Achievements meta={navRefs[4]} elements={achievements} />
                 <Contact meta={navRefs[5]} />
             </ContextHook>
-            <div className="bg"></div>
+            {/* <div className="bg"></div> */}
         </>
     );
 }
