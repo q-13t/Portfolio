@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import FadeInTop from '../animations/FadeInTop.tsx';
 import RevealFromLeft from '../animations/RevealFromLeft.tsx';
 import RevealFromRight from '../animations/RevealFromRight.tsx';
+import { useInView } from 'framer-motion';
 
 interface CarouselItem {
     name: string;
@@ -18,18 +19,66 @@ interface Props {
 }
 
 export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_width = 300 }) => {
-    const [carouselItems, setCarouselItems] = useState(items);
     const [isHovered, setIsHovered] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
     const [canScroll, setCanScroll] = useState(true);
-    const containerRef = useRef(null);
-    const sectionRef = useRef(null);
-    const offsetRef = useRef(0);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef, { margin: "-100px" });
+    const sectionRef = useRef<HTMLElement>(null);
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const initialTranslate = useRef(0);
+    const currentTranslate = useRef(0);
+    const animationFrameRef = useRef<number>(0);
 
-    const ITEM_WIDTH = item_width + 24; // include margin-right (mr-6 → 24px)
+
+    const ITEM_WIDTH = item_width + 24;
     const SPEED = px_per_frame;
 
-    // Check if animation is needed
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const onMouseDown = (e: MouseEvent) => {
+            isDragging.current = true;
+            startX.current = e.pageX - container.offsetLeft;
+            initialTranslate.current = currentTranslate.current;
+            cancelAnimationFrame(animationFrameRef.current!);
+        };
+
+        const onMouseMove = (e: MouseEvent) => {
+            if (!isDragging.current) return;
+            const x = e.pageX - container.offsetLeft;
+            const walk = x - startX.current;
+            currentTranslate.current = initialTranslate.current + walk;
+            requestAnimationFrame(animate);
+        };
+
+        const onMouseUp = () => {
+            if (!isDragging.current) return;
+            isDragging.current = false;
+            container.style.transition = 'transform 0.2s ease-out';
+        };
+        const onMouseLeave = () => {
+            if (!isDragging.current) return;
+            isDragging.current = false;
+            container.style.transition = 'transform 0.2s ease-out';
+        };
+
+        container.addEventListener("mousedown", onMouseDown);
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mouseup", onMouseUp);
+        window.addEventListener("mouseleave", onMouseLeave);
+
+        return () => {
+            container.removeEventListener("mousedown", onMouseDown);
+            window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("mouseup", onMouseUp);
+            window.addEventListener("mouseleave", onMouseLeave);
+        };
+    }, []);
+
+
+    // Scroll Effect
     useEffect(() => {
         const updateScrollState = () => {
             const visibleWidth = sectionRef.current?.offsetWidth ?? 0;
@@ -42,31 +91,63 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
         return () => window.removeEventListener("resize", updateScrollState);
     }, [items.length, ITEM_WIDTH]);
 
-    useEffect(() => {
-        if (!canScroll) return;
-        let animationFrame: number;
-
-        const animate = () => {
-            if (!isHovered && isVisible && containerRef.current) {
-                offsetRef.current += SPEED;
-
-                if (offsetRef.current >= ITEM_WIDTH) {
-                    offsetRef.current -= ITEM_WIDTH;
-                    setCarouselItems((prev) => {
-                        const [first, ...rest] = prev;
-                        return [...rest, first];
-                    });
-                }
-
-                containerRef.current.style.transform = `translateX(-${offsetRef.current}px)`;
+    const animate = () => {
+        if (!isHovered && containerRef.current) {
+            if (!isDragging.current) {
+                currentTranslate.current -= SPEED;
             }
 
-            animationFrame = requestAnimationFrame(animate);
-        };
 
-        animationFrame = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(animationFrame);
-    }, [isHovered, isVisible]);
+            if (Math.abs(currentTranslate.current) > items.length * ITEM_WIDTH) {
+                currentTranslate.current = 0;
+            }
+
+            const container = containerRef.current;
+            if (!container.parentElement) return;
+            const parent_rect = container.parentElement.getBoundingClientRect();
+
+            const firstChild = container.children[0];
+            const lastChild = container.children[container.children.length - 1];
+            const firstChild_end = firstChild.getBoundingClientRect().x + firstChild.getBoundingClientRect().width;
+            const lastChild_start = lastChild.getBoundingClientRect().x;
+
+            container.style.transition = 'none';
+
+            if (firstChild_end <= 0 && (firstChild && lastChild)) {
+                container.appendChild(firstChild);
+                currentTranslate.current += ITEM_WIDTH;
+                if (isDragging.current) {
+                    startX.current -= ITEM_WIDTH;
+                }
+            } else if (lastChild_start >= parent_rect.width && (firstChild && lastChild)) {
+                container.insertBefore(lastChild, firstChild);
+                currentTranslate.current -= ITEM_WIDTH;
+                if (isDragging.current) {
+                    startX.current += ITEM_WIDTH;
+                }
+            }
+
+            container.style.transform = `translateX(${currentTranslate.current}px)`;
+            if (!isDragging.current) {
+                animationFrameRef.current = requestAnimationFrame(animate);
+            }
+        };
+    };
+
+    // Animation Effect
+    useEffect(() => {
+        if (!canScroll) return;
+        if (isInView) {
+            animationFrameRef.current = requestAnimationFrame(animate);
+        } else {
+            cancelAnimationFrame(animationFrameRef.current)
+        }
+        return () => cancelAnimationFrame(animationFrameRef.current);
+    }, [isHovered, isInView, canScroll]);
+
+
+
+
 
     return (
         <section ref={(el) => { meta.content_ref.current = el; sectionRef.current = el; }} id={meta.name} className='max-w-[100vw] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-hidden mx-24' >
@@ -85,18 +166,20 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
                         <p className='dark:text-white text-black text-md font-mono'>Feel free to check out the screenshot by <span className='text-cyan-400'>clicking on image</span>. And don't forget to check out <span className='text-cyan-400'>GitHub repositories</span>.</p>
                     </RevealFromLeft>
                 </div>
-                <div ref={containerRef} className="flex  w-max py-10" style={{ transform: `translateX(0px)`, }}>
-                    {carouselItems.map((item, i) => (
-                        <FadeInTop _delay={1.25} _duration={1}>
-                            <div key={i} className="flex-shrink-0 w-[300px] h-[600px] mr-6 focus overflow-hidden flex justify-start items-start flex-col" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-                                <img src={"project_img/" + item.image} alt={item.name} className="w-full h-40 object-cover rounded cursor-pointer" onClick={() => { window.open("project_img/" + item.image, "_blank") }} />
-                                <h3 className="text-cyan-400 text-3xl font-mono ">{item.name}</h3>
-                                <div className="flex-1">
-                                    <p className="dark:text-white text-black text-md font-mono overflow-hidden text-clip text-wrap">{item.description}</p>
+                <div ref={containerRef} className="flex w-max py-10 " style={{ transform: `translateX(0px)`, }} >
+                    {items.map((item, i) => (
+                        <div id={item.name}>
+                            <FadeInTop _delay={0.25} _duration={1}>
+                                <div key={item.name} className="flex-shrink-0 w-[300px] h-[600px] mr-6 focus overflow-hidden flex justify-start items-start flex-col" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => { setIsHovered(false); }}>
+                                    <img src={"project_img/" + item.image} alt={item.name} className="w-full h-40 object-cover rounded cursor-pointer" onClick={() => { window.open("project_img/" + item.image, "_blank") }} />
+                                    <h3 className="text-cyan-400 text-3xl font-mono ">{item.name}</h3>
+                                    <div className="flex-1">
+                                        <p className="dark:text-white text-black text-md font-mono overflow-hidden text-clip text-wrap">{item.description}</p>
+                                    </div>
+                                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-cyan-400 text-md font-mono">{item.link}</a>
                                 </div>
-                                <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-cyan-400 text-md font-mono">{item.link}</a>
-                            </div>
-                        </FadeInTop>
+                            </FadeInTop>
+                        </div>
                     ))}
                 </div>
                 <div className='w-full m-6'>
