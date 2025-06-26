@@ -9,7 +9,6 @@ const FadeInTop = ({ children, _delay = 0.25, _duration = 0.50 }) => {
     useEffect(() => {
 
         if (isInView) {
-            console.log("isInView");
             mainControls.start("end");
         }
     }, [isInView, mainControls]);

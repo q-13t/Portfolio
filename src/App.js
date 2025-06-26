@@ -49,8 +49,6 @@ function App() {
 
     useEffect(() => {
         const interceptor = new IntersectionObserver((elements) => {
-            console.log(elements[0].isIntersecting, elements[0].target.id);
-            console.log();
             const nav_el = document.getElementById(elements[0].target.id + "_nav");
             nav_el.classList.toggle("viewing", elements[0].isIntersecting);
         }, { threshold: 0.4 });
