@@ -1,13 +1,119 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+}
+
+#root {
+
+    min-height: 100vh;
+    background-color: hsl(0 0% 6%);
+}
+
+:root {
+    --size: 20px;
+}
+
+.bg {
+    background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 238, 255, 1) 35%, rgba(0, 238, 255, 1) 67%, rgba(0, 0, 0, 1) 100%);
+    mask: radial-gradient(circle at 50% 50%, white 2px, transparent 2.5px) 50% 50% / var(--size) var(--size), url("https://assets.codepen.io/605876/noise-mask.png") 256px 50% / 256px 256px;
+    mask-composite: intersect;
+    animation: flicker 15s infinite linear;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    width: 100vw;
+    left: 0;
+    z-index: 5;
+}
+
+@keyframes flicker {
+    to {
+        mask-position: 50% 50%, 0 50%;
+    }
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+* {
+    user-select: none;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+
+body.dark .viewing {
+    background-color: #3a3a3a !important;
+    border: 1px solid rgb(34 211 238 / var(--tw-bg-opacity, 1)) !important;
+    border-top: 0px !important;
+    border-bottom: 0px !important;
+}
+
+.viewing {
+    background-color: #959595 !important;
+    border: 1px solid #3a3a3a !important;
+}
+
+
+.focus {
+    --g: 1px;
+    /* the gap  */
+    --b: 4px;
+    /* border thickness*/
+    --c: rgb(34 211 238 / var(--tw-bg-opacity, 1));
+    /* the color */
+
+
+    padding: calc(var(--g) + var(--b));
+    --_c: #0000 0 25%,
+        var(--c) 0 50%;
+    --_g1: repeating-linear-gradient(90deg, var(--_c)) repeat-x;
+    --_g2: repeating-linear-gradient(180deg, var(--_c)) repeat-y;
+    background: var(--_g1) var(--_p, 25%) 0,
+        var(--_g2) 0 var(--_p, 125%),
+        var(--_g1) var(--_p, 125%) 100%,
+        var(--_g2) 100% var(--_p, 25%);
+    background-size: 200% var(--b),
+        var(--b) 200%;
+    filter: grayscale(50%);
+    background-position: 25% 0, 0 125%, 125% 100%, 100% 25%;
+    transition: .4s;
+}
+
+
+
+.focus:hover {
+    background-position: 75% 0, 0 75%, 75% 100%, 100% 75%;
+    filter: grayscale(0%);
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.animate-blink {
+    display: inline-block;
+    width: 1ch;
+    animation: blink 1s step-end infinite;
 }
