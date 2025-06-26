@@ -154,11 +154,11 @@ export const Projects: React.FC<Props> = ({ items, meta, px_per_frame = 1, item_
 
 
     return (
-        <section ref={(el) => { meta.content_ref.current = el; sectionRef.current = el; }} id={meta.name} className='max-w-[100vw] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-hidden mx-24' >
+        <section ref={(el) => { meta.content_ref.current = el; sectionRef.current = el; }} id={meta.name} className='max-w-[100vw] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-hidden md:px-24 pl-[4rem] pr-[1rem]' >
             <div className="flex align-middle items-center justify-start flex-col md:px-12 md:py-10 h-full">
                 <div className='w-full h-max'>
                     <RevealFromLeft>
-                        <h1 className='dark:text-white text-black text-5xl font-mono md:mt-16 mt-3'>Projects</h1>
+                        <h1 className='dark:text-white text-black text-5xl font-mono md:my-16 my-3'>Projects</h1>
                     </RevealFromLeft>
                     <div className='flex-grow-[1] bg-cyan-400 h-[1px]'></div>
                 </div>

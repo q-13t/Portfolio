@@ -4,14 +4,14 @@ import RevealFromTop from "../animations/RevealFromTop.tsx";
 
 const Achievements = ({ meta, elements }) => {
     return (
-        <section ref={meta.content_ref} id={meta.name} className='h-auto md:h-[100vh] min-h-[100vh] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-auto px-24'>
+        <section ref={meta.content_ref} id={meta.name} className='h-auto md:h-[100vh] min-h-[100vh] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-auto md:px-24 pl-[4rem] pr-[1rem]'>
             <div className="flex align-middle items-center justify-start flex-col md:px-12 md:py-10 ">
                 <div className='w-full h-max'>
                     <RevealFromTop>
-                        <h1 className='dark:text-white text-black text-5xl font-mono md:mt-16 mt-3'>Achievements</h1>
+                        <h1 className='dark:text-white text-black text-5xl font-mono md:my-16 my-3'>Achievements</h1>
                     </RevealFromTop>
                     <div className='flex-grow-[1] bg-cyan-400 h-[1px]'></div>
-                </div>
+                </div>s
                 <div className='w-full  flex align-start items-start justify-start flex-col'>
                     {elements.map((item: { title: string, granted_by: string, date: string, link: string }, index: number) => {
                         return (
