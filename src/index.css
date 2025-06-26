@@ -110,43 +110,20 @@ body.dark .viewing {
     filter: grayscale(0%);
 }
 
+@keyframes blink {
 
-/* Cursor */
-.cursor {
-    position: relative;
-    width: 24em;
-    margin: 0 auto;
-    border-right: 2px solid rgba(255, 255, 255, .75);
-    font-size: 30px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    transform: translateY(-50%);
-}
-
-/* Animation */
-.typewriter-animation {
-    animation:
-        typewriter 5s steps(50) 1s 1 normal both,
-        blinkingCursor 500ms steps(50) infinite normal;
-}
-
-@keyframes typewriter {
-    from {
-        width: 0;
+    0%,
+    100% {
+        opacity: 1;
     }
 
-    to {
-        width: 100%;
+    50% {
+        opacity: 0;
     }
 }
 
-@keyframes blinkingCursor {
-    from {
-        border-right-color: rgba(255, 255, 255, .75);
-    }
-
-    to {
-        border-right-color: transparent;
-    }
+.animate-blink {
+    display: inline-block;
+    width: 1ch;
+    animation: blink 1s step-end infinite;
 }

@@ -8,7 +8,7 @@ const Achievements = ({ meta, elements }) => {
             <div className="flex align-middle items-center justify-start flex-col md:px-12 md:py-10 ">
                 <div className='w-full h-max'>
                     <RevealFromTop>
-                        <h1 className='dark:text-white text-black text-5xl font-mono'>Licenses & certifications</h1>
+                        <h1 className='dark:text-white text-black text-5xl font-mono md:mt-16 mt-3'>Licenses & certifications</h1>
                     </RevealFromTop>
                     <div className='flex-grow-[1] bg-cyan-400 h-[1px]'></div>
                 </div>
