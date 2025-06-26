@@ -4,11 +4,11 @@ import RevealFromTop from "../animations/RevealFromTop.tsx";
 
 const Achievements = ({ meta, elements }) => {
     return (
-        <section ref={meta.content_ref} id={meta.name} className='odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 h-max px-24'>
+        <section ref={meta.content_ref} id={meta.name} className='h-auto md:h-[100vh] min-h-[100vh] odd:dark:bg-[#333] odd:bg-[#CCC] dark:bg-transparent bg-transparent z-10 m-0 overflow-auto px-24'>
             <div className="flex align-middle items-center justify-start flex-col md:px-12 md:py-10 ">
                 <div className='w-full h-max'>
                     <RevealFromTop>
-                        <h1 className='dark:text-white text-black text-5xl font-mono md:mt-16 mt-3'>Licenses & certifications</h1>
+                        <h1 className='dark:text-white text-black text-5xl font-mono md:mt-16 mt-3'>Achievements</h1>
                     </RevealFromTop>
                     <div className='flex-grow-[1] bg-cyan-400 h-[1px]'></div>
                 </div>
