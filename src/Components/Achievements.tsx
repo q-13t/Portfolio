@@ -13,9 +13,9 @@ const Achievements = ({ meta, elements }) => {
                     <div className='flex-grow-[1] bg-cyan-400 h-[1px]'></div>
                 </div>
                 <div className='w-full  flex align-start items-start justify-start flex-col'>
-                    {elements.map((item, index) => {
+                    {elements.map((item: { title: string, granted_by: string, date: string, link: string }, index: number) => {
                         return (
-                            <div className='dark:text-white text-black text-md font-mono border-x-1 border-y-0 border border-black dark:border-cyan-400 md:mx-4 my-2 p-2 w-full '>
+                            <div key={index} className='dark:text-white text-black text-md font-mono border-x-1 border-y-0 border border-black dark:border-cyan-400 md:mx-4 my-2 p-2 w-full '>
                                 {index % 2 === 0 ? <RevealFromLeft _delay={index * 0.1}>
                                     <div className='flex align-middle items-center justify-between pb-6 truncate'>
                                         <div className='flex flex-col truncate'>
